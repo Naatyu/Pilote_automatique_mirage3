@@ -367,7 +367,7 @@ FT_AM_gamma_Dm = FT_AM(2)
 FT_gamma_Dmc = minreal(feedback(1,-Kq*FT_AM_q_Dm)*FT_AM_gamma_Dm)
 %sisotool(FT_gamma_Dmc) %K_gamma = 0.315 (0.31498)
 K_gamma = 0.315;
-FT_gamma_bo = K_gamma*FT_gamma_Dmc;
+FT_gamma_bo = K_gamma*FT_gamma_Dmc
 FT_gamma_bf = feedback(FT_gamma_bo,1,+1)
 damp(FT_gamma_bf)
 
@@ -454,10 +454,10 @@ num2str(gamma_c/pi*180),' °'],'FontSize',12)
 %-méthode classique-%
 
 FTz_gamma_bo = -FT_gamma_bf(6);
-%sisotool(FTz_gamma_bo) %0.0018
+%sisotool(FTz_gamma_bo) %0.0016
 
-Kz_gamma = 0.0018;
-FTz_gamma_bo = Kz_gamma*FT_gamma_bf(6);
+Kz_gamma = 0.00167;
+FTz_gamma_bo = Kz_gamma*FT_gamma_bf(6)
 FTz_gamma_bf = minreal(feedback(FTz_gamma_bo,1))
 allmargin(FTz_gamma_bo)
 w6db = bandwidth(FTz_gamma_bf,-6)
@@ -465,13 +465,13 @@ w6db = bandwidth(FTz_gamma_bf,-6)
 figure(18)
 step(FTz_gamma_bf,15)
 grid
-title('Réponse indicielle de z/zc pour Kz_\gamma=0.0018')
+title('Réponse indicielle de z/zc pour Kz_\gamma=0.00167')
 
 figure(19)
 w=logspace(-1,1,500);
 bodemag(FTz_gamma_bf,w)
 grid
-title('Représentation de bode pour Kz_\gamma=0.0018')
+title('Représentation de bode pour Kz_\gamma=0.00167')
 
 %-méthode du retour d'état-%
 
@@ -482,7 +482,7 @@ FTz_gamma_bf = tf(FTz_gamma_bf_ss);
 figure(20);
 step(FTz_gamma_bf(6),15)
 grid
-title('Réponse indicielle de z/zc pour Kz_gamma=0.0018')
+title('Réponse indicielle de z/zc pour Kz_\gamma=0.00167')
 
 %-étude en simulation-%
 % sans Bdg et sans filtre
