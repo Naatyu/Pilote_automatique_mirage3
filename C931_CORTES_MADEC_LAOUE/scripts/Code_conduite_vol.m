@@ -42,7 +42,7 @@ k = 0.22;
 
 %---CALCUL DU POINT D'EQUILIBRE---%
 V_equilibre = Mach*sqrt(Gamma*R*Temperature);
-q_equilibre = 1/2*(rho*V_equilibre^2);
+q_equilibre = 1/2*(rho*V_equilibre^2)
 Epsilon = 0.001;
 
 [Cz_equilibre, Delta_m_equilibre, Alpha_equilibre_i, Cx_equilibre, F_equilibre] = point_equilibre(q_equilibre, S, masse_aeronef, g, Delta_m0_etoile, Cz_m, X, Y, Alpha0_2etoile, Cz_alpha, Cx_0, k, Epsilon);
@@ -245,7 +245,7 @@ title('Résultats de la simulation sur 10 secondes')
 grid
 legend('v','gam','al','q')
 
-%---Determination de Kq---%
+%---Determination de Kq---%Important//////////////////////
 
 %sisotool('rlocus',FT_q_Dm) %Kq = 0.0785
 
@@ -306,14 +306,14 @@ FT_cd=FT_BdG*FT_q_Dm;
 FT_cr=tf([tau_filtre_q 0],[tau_filtre_q 1]);
 %sisotool('rlocus',FT_cd*FT_cr) %Kq = 0.021
 
-%---Experimentation---%
+%---Avion_naturel_decouple---%
 
 tsim = 6;
 % Avion naturel
 Kq=0;
 SW_filtre = -1;
 SW_BdG= -1;
-sim('Experimentation')
+sim('Avion_naturel_decouple')
 figure(12)
 plot(ans.temps,ans.alpha,'r',ans.temps,ans.q,'-.r')
 title('Réponse indicielle de q/Dm et \alpha/Dm avec amortissage, filtre et BdG')
@@ -323,25 +323,25 @@ hold on
 Kq=0.0785; 
 SW_filtre = -1;
 SW_BdG= -1;
-sim('Experimentation')
+sim('Avion_naturel_decouple')
 plot(ans.temps,ans.alpha,'b',ans.temps,ans.q,'-.b')
 
 % Avion naturel + amortisseur + Filtre
 Kq=0.0785;
 SW_filtre = 1;
 SW_BdG= -1;
-sim('Experimentation')
+sim('Avion_naturel_decouple')
 plot(ans.temps,ans.alpha,'k',ans.temps,ans.q,'-.k')
 
 % Avion naturel + amortisseur + Filtre + BdG
 Kq=0.0785;
 SW_filtre = 1;
 SW_BdG= 1;
-sim('Experimentation')
+sim('Avion_naturel_decouple')
 plot(ans.temps,ans.alpha,'g',ans.temps,ans.q,'-.g')
-grid; hold off;
-legend('En rouge l''avion naturel (al continu; q pointillé)','En bleu l''avion naturel + amortisseur','En noir l''avion naturel + amortisseur + filtre','En vert l''avion naturel + amortisseur + filtre + BdG')
-
+grid; 
+legend('\alpha avion naturel al','q avion naturel','\alpha avion naturel + amortisseur','q avion naturel + amortisseur ','\alpha avion naturel + amortisseur + filtre','q avion naturel + amortisseur + filtre','\alpha avion naturel + amortisseur + filtre + BdG','q avion naturel + amortisseur + filtre + BdG ')
+hold off;
 %---Tenue de pente---%
 
 % simplification représentation d'état avec v=dv/dt=0 car automanette gere
@@ -367,7 +367,7 @@ FT_AM_gamma_Dm = FT_AM(2)
 FT_gamma_Dmc = minreal(feedback(1,-Kq*FT_AM_q_Dm)*FT_AM_gamma_Dm)
 %sisotool(FT_gamma_Dmc) %K_gamma = 0.315 (0.31498)
 K_gamma = 0.315;
-FT_gamma_bo = K_gamma*FT_gamma_Dmc
+FT_gamma_bo = K_gamma*FT_gamma_Dmc;
 FT_gamma_bf = feedback(FT_gamma_bo,1,+1)
 damp(FT_gamma_bf)
 
@@ -454,10 +454,10 @@ num2str(gamma_c/pi*180),' °'],'FontSize',12)
 %-méthode classique-%
 
 FTz_gamma_bo = -FT_gamma_bf(6);
-%sisotool(FTz_gamma_bo) %0.0016
+%sisotool(FTz_gamma_bo) %0.00167
 
 Kz_gamma = 0.00167;
-FTz_gamma_bo = Kz_gamma*FT_gamma_bf(6)
+FTz_gamma_bo = Kz_gamma*FT_gamma_bf(6);
 FTz_gamma_bf = minreal(feedback(FTz_gamma_bo,1))
 allmargin(FTz_gamma_bo)
 w6db = bandwidth(FTz_gamma_bf,-6)
